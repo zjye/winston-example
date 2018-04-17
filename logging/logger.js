@@ -1,6 +1,7 @@
 var winston = require('winston');
 var WinstonCloudWatch = require('winston-cloudwatch');
 var Elasticsearch = require('winston-elasticsearch');
+var LogzioWinstonTransport = require('winston-logzio');
 var moment = require('moment');
 
 // define the custom settings for each transport (file, console)
@@ -30,6 +31,11 @@ var options = {
         clientOpts: {
             host: 'https://search-foo-4fn2rvkj4azwqykecbtyopk2ue.us-east-1.es.amazonaws.com/'
         }
+    },
+    logzio: {
+        token: 'dwYhFtzDIUVWrEnNJAXgCVfuiUiuGojD',
+        host: 'listener.logz.io',
+        type: 'winston-example'
     }
 };
 
@@ -40,7 +46,8 @@ var logger = new winston.Logger({
 });
 logger.add(winston.transports.Console, options.console);
 logger.add(WinstonCloudWatch, options.cloudwatch);
-logger.add(Elasticsearch, options.elasticsearch);
+// logger.add(Elasticsearch, options.elasticsearch);
+logger.add(LogzioWinstonTransport, options.logzio);
 
 // create a stream object with a 'write' function that will be used by `morgan`
 logger.stream = {
