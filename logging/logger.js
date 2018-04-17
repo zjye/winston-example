@@ -1,5 +1,6 @@
 var winston = require('winston');
 var WinstonCloudWatch = require('winston-cloudwatch');
+var Elasticsearch = require('winston-elasticsearch');
 var moment = require('moment');
 
 // define the custom settings for each transport (file, console)
@@ -23,6 +24,12 @@ var options = {
             console.error(error);
             
         }
+    },
+    elasticsearch: {
+        level: 'debug',
+        clientOpts: {
+            host: 'https://search-foo-4fn2rvkj4azwqykecbtyopk2ue.us-east-1.es.amazonaws.com/'
+        }
     }
 };
 
@@ -33,13 +40,13 @@ var logger = new winston.Logger({
 });
 logger.add(winston.transports.Console, options.console);
 logger.add(WinstonCloudWatch, options.cloudwatch);
+logger.add(Elasticsearch, options.elasticsearch);
 
 // create a stream object with a 'write' function that will be used by `morgan`
 logger.stream = {
     write: function (message) {
         // use the 'info' log level so the output will be picked up by both transports (file and console)
-        logger.info(message);
-        logger.debug('hello');
+        logger.info("HttpRequest", JSON.parse(message));
     },
 };
 
