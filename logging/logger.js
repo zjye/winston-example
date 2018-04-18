@@ -1,13 +1,10 @@
-var winston = require('winston');
-var WinstonCloudWatch = require('winston-cloudwatch');
-var Elasticsearch = require('winston-elasticsearch');
-var LogzioWinstonTransport = require('winston-logzio');
-var Papertrail = require('winston-papertrail').Papertrail;
-var moment = require('moment');
-winston.loggers.add('logger1');
-winston.loggers.add('logger1');
-winston.loggers.add('logger2');
-console.info(winston.loggers);
+import winston from 'winston';
+import WinstonCloudWatch from 'winston-cloudwatch';
+import Elasticsearch from 'winston-elasticsearch';
+import LogzioWinstonTransport from 'winston-logzio';
+import {Papertrail} from 'winston-papertrail';
+import moment from 'moment';
+
 
 // define the custom settings for each transport (file, console)
 var options = {
@@ -34,17 +31,13 @@ var options = {
     elasticsearch: {
         level: 'debug',
         clientOpts: {
-            host: 'https://search-foo-4fn2rvkj4azwqykecbtyopk2ue.us-east-1.es.amazonaws.com/'
         }
     },
     logzio: {
-        token: 'logzio-token',
         host: 'listener.logz.io',
         type: 'winston-example'
     },
     papertrail: {
-        host: 'provided by papertail',
-        port: 12345,
         hostname: 'winston-01',
     }
 };
@@ -70,13 +63,17 @@ logger.add(WinstonCloudWatch, options.cloudwatch);
 logger.add(LogzioWinstonTransport, options.logzio);
 
 
-// create a stream object with a 'write' function that will be used by `morgan`
-logger.stream = {
-    write: function (message) {
-        // use the 'info' log level so the output will be picked up by both transports (file and console)
-        logger.info("HttpRequest", message);
-    },
+const LoggerFactory =  {
+
+    create: function(loggerName) {
+        winston.loggers.add(loggerName, {
+            exitOnError: false,
+            transports: [
+                new winston.transports.Console(options.console),
+                winstonPapertrail
+            ]
+        });   
+        return winston.loggers.get(loggerName);
+    }
 };
-
-
-module.exports = logger;
+export default LoggerFactory;

@@ -1,6 +1,8 @@
-var express = require('express');
-var router = express.Router();
-var logger = require('../logging/logger');
+import express from 'express';
+import LoggerFactory from '../logging/logger';
+
+const router = express.Router();
+const logger = LoggerFactory.create('UserLogger');
 
 /* GET users listing. */
 router.get('/', function(req, res, next) {
