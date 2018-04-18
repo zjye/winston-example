@@ -611,6 +611,10 @@ getpass@^0.1.1:
   dependencies:
     assert-plus "^1.0.0"
 
+glossy@^0.1.7:
+  version "0.1.7"
+  resolved "https://registry.yarnpkg.com/glossy/-/glossy-0.1.7.tgz#769b5984a96f6066ab9ea758224825ee6c210f0b"
+
 "graceful-readlink@>= 1.0.0":
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/graceful-readlink/-/graceful-readlink-1.0.1.tgz#4cafad76bc62f02fa039b2f94e9a3dd3a391a725"
@@ -1442,6 +1446,12 @@ winston-logzio@^1.0.6:
     logzio-nodejs "^0.4.7"
     util "^0.10.3"
     winston "1.0.x"
+
+winston-papertrail@^1.0.5:
+  version "1.0.5"
+  resolved "https://registry.yarnpkg.com/winston-papertrail/-/winston-papertrail-1.0.5.tgz#54a23b16e5046652bf687b37dc802714bfd462c9"
+  dependencies:
+    glossy "^0.1.7"
 
 winston@1.0.x:
   version "1.0.2"

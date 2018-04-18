@@ -18,6 +18,7 @@
     "winston": "^2.4.1",
     "winston-cloudwatch": "^1.13.1",
     "winston-elasticsearch": "^0.5.9",
-    "winston-logzio": "^1.0.6"
+    "winston-logzio": "^1.0.6",
+    "winston-papertrail": "^1.0.5"
   }
 }

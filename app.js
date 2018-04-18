@@ -14,8 +14,11 @@ var app = express();
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
- 
-app.use(morgan(morganJson(':method :url :status :res[content-length] bytes :response-time ms'), { stream: logger.stream }));
+
+app.use(function(err, req, res, next) {
+  logger.error('unhandled error', err);
+});
+app.use(morgan('combined', { stream: logger.stream }));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
